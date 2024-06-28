@@ -8,6 +8,7 @@ import {
   QueryInfo,
   loggingMiddleware,
 } from 'nestjs-prisma';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -34,6 +35,7 @@ import {
         ],
       },
     }),
+    AuthModule,
   ],
   controllers: [],
   providers: [
