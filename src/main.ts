@@ -5,6 +5,7 @@ import * as cookieParser from 'cookie-parser';
 import helmet from 'helmet';
 import * as compression from 'compression';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { writeFileSync } from 'fs';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -28,8 +29,10 @@ async function bootstrap() {
     .setTitle('Starter API')
     .setDescription('The Nestjs Starter By @sshahriazz')
     .setVersion('1.0')
+    .addBearerAuth()
     .build();
   const document = SwaggerModule.createDocument(app, config);
+  writeFileSync('./swagger-spec.json', JSON.stringify(document));
   SwaggerModule.setup('api', app, document);
 
   await app.listen(3000);

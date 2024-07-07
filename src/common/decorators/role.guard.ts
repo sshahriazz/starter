@@ -18,7 +18,6 @@ export class RoleGuard implements CanActivate {
     context: ExecutionContext,
   ): boolean | Promise<boolean> | Observable<boolean> {
     const roles = this.reflector.get<string[]>('roles', context.getHandler());
-
     const isPublic = this.reflector.get<boolean>(
       'isPublic',
       context.getHandler(),
@@ -34,6 +33,7 @@ export class RoleGuard implements CanActivate {
     const request = context.switchToHttp().getRequest();
     const user = request.user;
     const isPresent = this.matchesRoles(roles, user.role);
+    console.log(user.role, roles);
 
     if (isPresent) {
       return true;

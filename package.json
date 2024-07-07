@@ -8,7 +8,7 @@
   "scripts": {
     "documentation": "npx @compodoc/compodoc -p tsconfig.json -s",
     "build": "nest build",
-    "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
+    "format": "prettier --write \"@/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",

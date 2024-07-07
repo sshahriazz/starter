@@ -8,7 +8,9 @@ import {
   QueryInfo,
   loggingMiddleware,
 } from 'nestjs-prisma';
+import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
+import config from './common/configs/config';
 
 @Module({
   imports: [
@@ -20,7 +22,8 @@ import { AuthModule } from './auth/auth.module';
     ]),
     ConfigModule.forRoot({
       isGlobal: true,
-      envFilePath: '.env',
+      load: [config],
+      envFilePath: ['.env.local', '.env'],
     }),
     PrismaModule.forRoot({
       isGlobal: true,
@@ -35,6 +38,7 @@ import { AuthModule } from './auth/auth.module';
         ],
       },
     }),
+    UserModule,
     AuthModule,
   ],
   controllers: [],

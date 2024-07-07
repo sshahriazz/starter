@@ -4,6 +4,7 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
+import { TokenExpiredError } from '@nestjs/jwt';
 import { AuthGuard } from '@nestjs/passport';
 import { type Observable } from 'rxjs';
 
@@ -12,7 +13,7 @@ import { type Observable } from 'rxjs';
  *
  */
 @Injectable()
-export class JwtAuthGuard extends AuthGuard('jwt') {
+export class JwtRefreshGuard extends AuthGuard('jwt-refresh') {
   constructor(private reflector: Reflector) {
     super();
   }
@@ -34,8 +35,12 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
     return super.canActivate(context);
   }
 
-  handleRequest(err: any, user: any) {
-    if (err || !user) {
+  handleRequest(err: any, user: any, info: Error) {
+    console.log(info);
+    if (err || !user || info) {
+      if (info instanceof TokenExpiredError) {
+        throw new UnauthorizedException('Token expired');
+      }
       throw err || new UnauthorizedException();
     }
 

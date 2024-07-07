@@ -1,0 +1,533 @@
+{
+  "openapi": "3.0.0",
+  "paths": {
+    "/user/update": {
+      "put": {
+        "operationId": "UserController_updateUser",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/UpdateUserDto" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/UserResponseDto" }
+              }
+            }
+          }
+        },
+        "tags": ["user"],
+        "security": [{ "bearer": [] }]
+      }
+    },
+    "/user/find": {
+      "get": {
+        "operationId": "UserController_findUser",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "query",
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/UserResponseDto" }
+              }
+            }
+          },
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/UserResponseDto" }
+              }
+            }
+          }
+        },
+        "tags": ["user"],
+        "security": [{ "bearer": [] }]
+      }
+    },
+    "/user/find-by-email": {
+      "get": {
+        "operationId": "UserController_findUserByEmail",
+        "parameters": [
+          {
+            "name": "email",
+            "required": true,
+            "in": "query",
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/UserResponseDto" }
+              }
+            }
+          }
+        },
+        "tags": ["user"],
+        "security": [{ "bearer": [] }]
+      }
+    },
+    "/user/list": {
+      "get": {
+        "operationId": "UserController_listUsers",
+        "parameters": [
+          {
+            "name": "take",
+            "required": false,
+            "in": "query",
+            "description": "Number of users to take",
+            "schema": { "type": "number" }
+          },
+          {
+            "name": "cursor",
+            "required": false,
+            "in": "query",
+            "description": "Cursor for pagination",
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "sortColumn",
+            "required": false,
+            "in": "query",
+            "description": "Column to sort by",
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "sortOrder",
+            "required": false,
+            "in": "query",
+            "description": "Sort order",
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/UserListDto" }
+              }
+            }
+          }
+        },
+        "tags": ["user"],
+        "security": [{ "bearer": [] }]
+      }
+    },
+    "/auth/register": {
+      "post": {
+        "operationId": "AuthController_register",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/RegisterDto" }
+            }
+          }
+        },
+        "responses": { "201": { "description": "" } },
+        "tags": ["Authentication"],
+        "security": [{ "bearer": [] }]
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "operationId": "AuthController_login",
+        "parameters": [
+          {
+            "name": "isCookie",
+            "required": true,
+            "in": "query",
+            "schema": { "type": "boolean" }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/LoginDto" }
+            }
+          }
+        },
+        "responses": { "201": { "description": "" } },
+        "tags": ["Authentication"],
+        "security": [{ "bearer": [] }]
+      }
+    },
+    "/auth/refresh-token": {
+      "get": {
+        "operationId": "AuthController_refreshToken",
+        "parameters": [
+          {
+            "name": "rt",
+            "required": true,
+            "in": "query",
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": { "200": { "description": "" } },
+        "tags": ["Authentication"],
+        "security": [{ "bearer": [] }]
+      }
+    },
+    "/auth/add-role": {
+      "post": {
+        "operationId": "AuthController_createUserRole",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/RoleCreateDto" }
+            }
+          }
+        },
+        "responses": { "201": { "description": "" } },
+        "tags": ["Authentication"],
+        "security": [{ "bearer": [] }]
+      }
+    },
+    "/auth/attach-role-to-user": {
+      "post": {
+        "operationId": "AuthController_attachRoleToUser",
+        "parameters": [
+          {
+            "name": "user_id",
+            "required": true,
+            "in": "query",
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "role_id",
+            "required": true,
+            "in": "query",
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "assigned_by",
+            "required": true,
+            "in": "query",
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": { "201": { "description": "" } },
+        "tags": ["Authentication"],
+        "security": [{ "bearer": [] }]
+      }
+    },
+    "/auth/add-permissions-to-role": {
+      "post": {
+        "operationId": "AuthController_addPermissionsToRole",
+        "parameters": [
+          {
+            "name": "role_id",
+            "required": true,
+            "in": "query",
+            "schema": { "type": "string" }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": { "$ref": "#/components/schemas/PermissionsDto" }
+              }
+            }
+          }
+        },
+        "responses": { "201": { "description": "" } },
+        "tags": ["Authentication"],
+        "security": [{ "bearer": [] }]
+      }
+    },
+    "/auth/attach-permissions-to-role": {
+      "post": {
+        "operationId": "AuthController_attachPermissionToRole",
+        "parameters": [
+          {
+            "name": "role_id",
+            "required": true,
+            "in": "query",
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "permission_id",
+            "required": true,
+            "in": "query",
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": { "201": { "description": "" } },
+        "tags": ["Authentication"],
+        "security": [{ "bearer": [] }]
+      }
+    },
+    "/auth/delete-role": {
+      "post": {
+        "operationId": "AuthController_deleteRole",
+        "parameters": [
+          {
+            "name": "role_id",
+            "required": true,
+            "in": "query",
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": { "201": { "description": "" } },
+        "tags": ["Authentication"],
+        "security": [{ "bearer": [] }]
+      }
+    },
+    "/auth/delete-permissions": {
+      "post": {
+        "operationId": "AuthController_deletePermission",
+        "parameters": [
+          {
+            "name": "permission_id",
+            "required": true,
+            "in": "query",
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": { "201": { "description": "" } },
+        "tags": ["Authentication"],
+        "security": [{ "bearer": [] }]
+      }
+    },
+    "/auth/remove-permission-from-role": {
+      "post": {
+        "operationId": "AuthController_deleteRolePermission",
+        "parameters": [
+          {
+            "name": "role_id",
+            "required": true,
+            "in": "query",
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "permission_id",
+            "required": true,
+            "in": "query",
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": { "201": { "description": "" } },
+        "tags": ["Authentication"],
+        "security": [{ "bearer": [] }]
+      }
+    },
+    "/auth/remove-user-role": {
+      "post": {
+        "operationId": "AuthController_removeUserRole",
+        "parameters": [
+          {
+            "name": "user_id",
+            "required": true,
+            "in": "query",
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "role_id",
+            "required": true,
+            "in": "query",
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": { "201": { "description": "" } },
+        "tags": ["Authentication"],
+        "security": [{ "bearer": [] }]
+      }
+    },
+    "/auth/list-user-role": {
+      "get": {
+        "operationId": "AuthController_listUserRole",
+        "parameters": [
+          {
+            "name": "user_id",
+            "required": true,
+            "in": "query",
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": { "200": { "description": "" } },
+        "tags": ["Authentication"],
+        "security": [{ "bearer": [] }]
+      }
+    },
+    "/auth/list-permissions": {
+      "get": {
+        "operationId": "AuthController_listRolePermissions",
+        "parameters": [],
+        "responses": { "200": { "description": "" } },
+        "tags": ["Authentication"],
+        "security": [{ "bearer": [] }]
+      }
+    },
+    "/auth/list-roles": {
+      "get": {
+        "operationId": "AuthController_listRoles",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": { "type": "array", "items": { "type": "object" } }
+              }
+            }
+          }
+        },
+        "tags": ["Authentication"],
+        "security": [{ "bearer": [] }]
+      }
+    }
+  },
+  "info": {
+    "title": "Starter API",
+    "description": "The Nestjs Starter By @sshahriazz",
+    "version": "1.0",
+    "contact": {}
+  },
+  "tags": [],
+  "servers": [],
+  "components": {
+    "securitySchemes": {
+      "bearer": { "scheme": "bearer", "bearerFormat": "JWT", "type": "http" }
+    },
+    "schemas": {
+      "UpdateUserDto": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "email": { "type": "string" },
+          "first_name": { "type": "string" },
+          "last_name": { "type": "string" },
+          "password": { "type": "string" },
+          "email_verified": { "type": "boolean" },
+          "disable_access": { "type": "boolean" },
+          "avatar": { "type": "string" },
+          "created_at": { "format": "date-time", "type": "string" },
+          "updated_at": { "format": "date-time", "type": "string" }
+        },
+        "required": ["id"]
+      },
+      "UserResponseDto": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "email": { "type": "string" },
+          "first_name": { "type": "string" },
+          "last_name": { "type": "string" },
+          "password": { "type": "string" },
+          "email_verified": { "type": "boolean" },
+          "disable_access": { "type": "boolean" },
+          "avatar": { "type": "string" },
+          "created_at": { "format": "date-time", "type": "string" },
+          "updated_at": { "format": "date-time", "type": "string" }
+        },
+        "required": [
+          "id",
+          "email",
+          "first_name",
+          "last_name",
+          "password",
+          "email_verified",
+          "disable_access",
+          "avatar",
+          "created_at",
+          "updated_at"
+        ]
+      },
+      "UserDto": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "email": { "type": "string" },
+          "first_name": { "type": "string" },
+          "last_name": { "type": "string" },
+          "password": { "type": "string" },
+          "email_verified": { "type": "boolean" },
+          "disable_access": { "type": "boolean" },
+          "avatar": { "type": "string" },
+          "created_at": { "format": "date-time", "type": "string" },
+          "updated_at": { "format": "date-time", "type": "string" }
+        },
+        "required": [
+          "id",
+          "email",
+          "first_name",
+          "last_name",
+          "password",
+          "email_verified",
+          "disable_access",
+          "avatar",
+          "created_at",
+          "updated_at"
+        ]
+      },
+      "UserListDto": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/UserDto" }
+          },
+          "nextCursor": { "type": "string" }
+        },
+        "required": ["data"]
+      },
+      "RegisterDto": {
+        "type": "object",
+        "properties": {
+          "firstName": { "type": "string" },
+          "lastName": { "type": "string" },
+          "email": { "type": "string" },
+          "password": { "type": "string" }
+        },
+        "required": ["firstName", "lastName", "email", "password"]
+      },
+      "LoginDto": {
+        "type": "object",
+        "properties": {
+          "email": { "type": "string" },
+          "password": { "type": "string" }
+        },
+        "required": ["email", "password"]
+      },
+      "RoleCreateDto": {
+        "type": "object",
+        "properties": { "name": { "type": "string" } },
+        "required": ["name"]
+      },
+      "PermissionsDto": {
+        "type": "object",
+        "properties": {
+          "resource": { "type": "string" },
+          "actions": { "type": "array", "items": { "type": "string" } }
+        },
+        "required": ["resource", "actions"]
+      }
+    }
+  }
+}
