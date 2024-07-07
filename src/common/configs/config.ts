@@ -8,11 +8,9 @@ const config: Config = {
   },
   s3: {
     region: process.env.S3_REGION || 'us-east-2',
-    accessKeyId: process.env.S3_ACCESS_KEY_ID || 'AKIAU6GDWF757QAMW7WY',
+    accessKeyId: process.env.S3_ACCESS_KEY_ID,
     bucketName: process.env.S3_BUCKET_NAME || 'counter-top-storage',
-    secretAccessKey:
-      process.env.S3_SECRET_ACCESS_KEY ||
-      'QRHYACDX7KG8Hkxurotq4VtZDdSO06LHxuVyZWPu',
+    secretAccessKey: process.env.S3_SECRET_ACCESS_KEY,
     bucketUrl:
       process.env.S3_BUCKET_URL ||
       'https://counter-top-storage.s3.us-east-2.amazonaws.com/',
